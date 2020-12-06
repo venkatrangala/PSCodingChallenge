@@ -1,0 +1,82 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <img width="50%" alt="Paymentsense Logo" src="../assets/paymentsense-logo.svg">
+  <h1>
+    {{ title }}
+  </h1>
+  <h2>... Paymentsense Coding Challenge API is <fa-icon [icon]=paymentsenseCodingChallengeApiActiveIcon
+                                                        [styles]="{ 'stroke': paymentsenseCodingChallengeApiActiveIconColour, 'color': paymentsenseCodingChallengeApiActiveIconColour }"></fa-icon> ...</h2>
+  
+      
+  
+  <div class="container">
+    <div class="row">
+      <div class="col">
+          <h4 class="list" >List of Countries</h4>
+          <ul class="list-group" id="lstCountries">
+            <li id="lstCountries{{i}}"
+              class="list-group-item"
+              *ngFor="
+                let country of countries | paginate : {
+                        itemsPerPage: pageSize,
+                        currentPage: page,
+                        totalItems: count
+                      };
+                let i = index"
+              [class.active]="i == currentIndex"
+              (click)="setActiveCountry(country, i)"
+            >
+            <p class="list"><img src="{{ country.flag }}" width="40" height="40"> {{ country.name }} </p>
+            </li>
+          </ul>
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              responsive="true"
+              (pageChange)="handlePageChange($event)"
+            ></pagination-controls>
+      </div>
+      <div class="col">
+        <br /><br />
+        <div *ngIf="!currentCountry">
+          <p>Please click on a Country...</p>
+        </div>
+          <div *ngIf="currentCountry" class="list">
+            <h5>Country Details</h5>
+            <div>
+              <label><strong>Capital City:</strong></label> {{ currentCountry.capital }}
+            </div>
+            <div>
+              <label><strong>Population:</strong></label>
+              {{ currentCountry.population }}
+            </div>
+            <div>
+              <label><strong>Timezones:</strong></label>
+              {{ currentCountry.timezones }}
+            </div>
+            <div>
+              <label><strong>Currencies:</strong></label>
+              <li
+              *ngFor="
+                let currency of currentCountry.currencies
+              ">{{ currency.name }}</li>
+            </div>
+            <div>
+              <label><strong>Languages:</strong></label>
+              <li
+              *ngFor="
+                let language of currentCountry.languages
+              ">{{ language.name }}</li>
+            </div>
+            <div>
+              <label><strong>Borders:</strong></label>
+              <li
+              *ngFor="
+                let border of currentCountry.borders
+              ">{{ border}}</li>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+<router-outlet></router-outlet>
